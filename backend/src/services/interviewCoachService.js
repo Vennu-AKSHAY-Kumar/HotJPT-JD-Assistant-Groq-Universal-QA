@@ -20,14 +20,30 @@ function sanitizeHistory(history) {
     .slice(-8);
 }
 
+export function classifyCoachQuestion(message) {
+  const text = String(message || "").toLowerCase();
+  const jobSpecificPatterns = [
+    /\b(?:this|the|about this)\s+(?:job|role|position|posting|company|employer|job description|jd)\b/,
+    /\b(?:job title|role name|position title)\b/,
+    /\b(?:what|which|how many)\b.{0,50}\b(?:this role|this position|this job|the posting|the jd)\b/,
+    /\b(?:sponsor|sponsorship|h-?1b|visa|remote|hybrid|onsite|on-site)\b.{0,50}\b(?:company|job|role|position|posting|jd)\b/,
+  ];
+
+  return jobSpecificPatterns.some((pattern) => pattern.test(text))
+    ? "JOB_SPECIFIC_FACT"
+    : "GENERAL_COACHING_OR_TECHNICAL";
+}
+
 export async function coachInterview({ context, message, history }) {
   const safeHistory = sanitizeHistory(history);
+  const questionType = classifyCoachQuestion(message);
 
   const completion = await generateStructured({
     prompt: buildInterviewCoachPrompt({
       context,
       message: String(message).slice(0, 6000),
       history: safeHistory,
+      questionType,
     }),
     schema: coachSchema,
     schemaName: "interview_coach",
