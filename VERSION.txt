@@ -1,0 +1,4 @@
+HotJPT JD Assistant — Groq Universal Q&A Edition
+Primary: Groq / qwen/qwen3.8-27b
+Ask Anything uses the same conversational engine as Interview Coach
+Optional fallback: Gemini

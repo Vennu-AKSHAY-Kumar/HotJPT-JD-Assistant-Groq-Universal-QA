@@ -1,0 +1,21 @@
+{
+  "name": "jd-assistant-groq-backend",
+  "version": "3.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch server.js",
+    "start": "node server.js",
+    "check": "node --check server.js && node --check api/index.js && node --check src/app.js && node --check src/controllers/jdController.js && node --check src/routes/jdRoutes.js && node --check src/services/aiService.js && node --check src/services/groqService.js && node --check src/services/geminiService.js && node --check src/services/groundingService.js && node --check src/services/interviewCoachService.js && node --check src/prompts/jdPrompts.js && node --check src/prompts/interviewCoachPrompt.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@google/genai": "^1.52.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "groq-sdk": "^0.37.0"
+  }
+}
